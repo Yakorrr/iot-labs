@@ -23,3 +23,4 @@ see endpoints:
 3. There is 5 CRUD endpoints
 
 you can find endpoints in main.py
+also subscription logic("логіку підписки на оволення даних") is in main.py
