@@ -49,14 +49,21 @@ def run():
     # Prepare mqtt client
     client = connect_mqtt(config.MQTT_BROKER_HOST, config.MQTT_BROKER_PORT)
 
-    generate_height_data('src/data/height.csv', 300)
-
     # Prepare datasource
-    datasource = FileDatasource(
-        "src/data/data.csv",
-        "src/data/gps.csv",
-        "src/data/height.csv",
-    )
+    try:
+        generate_height_data('src/data/height.csv', 300)
+        datasource = FileDatasource(
+            "src/data/data.csv",
+            "src/data/gps.csv",
+            "src/data/height.csv",
+        )
+    except FileNotFoundError:
+        generate_height_data('data/height.csv', 300)
+        datasource = FileDatasource(
+            "data/data.csv",
+            "data/gps.csv",
+            "data/height.csv",
+        )
 
     # Infinity publish data
     publish(client, config.MQTT_TOPIC, datasource, config.DELAY)
