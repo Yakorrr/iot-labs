@@ -1,10 +1,12 @@
+from dataclasses import dataclass
 from csv import reader
 from datetime import datetime
-from domain.accelerometer import Accelerometer
-from domain.gps import Gps
-from domain.aggregated_data import AggregatedData
+from src.domain.accelerometer import Accelerometer
+from src.domain.gps import Gps
+from src.domain.aggregated_data import AggregatedData
 
 
+@dataclass
 class FileDatasource:
     def __init__(
             self,
@@ -30,19 +32,36 @@ class FileDatasource:
         return AggregatedData(accelerometer_data, gps_data, current_time)
 
     def _read_next_accelerometer_data(self) -> Accelerometer:
-        row = next(self.accelerometer_reader)
+        while True:
+            row = next(self.accelerometer_reader, None)  # Use None to handle end of file
+
+            if row is None:  # End of file reached, reset file pointer
+                self.accelerometer_file.seek(0)
+                continue
+
+            if row[0].isdigit():
+                break
 
         # Assuming the structure of accelerometer data in CSV is [x, y, z]
         return Accelerometer(int(row[0]), int(row[1]), int(row[2]))
 
     def _read_next_gps_data(self) -> Gps:
-        row = next(self.gps_reader)
+        while True:
+            row = next(self.gps_reader, None)  # Use None to handle end of file
+
+            if row is None:  # End of file reached, reset file pointer
+                self.gps_file.seek(0)
+                continue
+
+            if row[0].replace('.', '', 1).isdigit():
+                break
 
         # Assuming the structure of GPS data in CSV is [longitude, latitude]
         return Gps(float(row[0]), float(row[1]))
 
     def start_reading(self):
         """The method must be called before starting to read data"""
+
         self.accelerometer_file = open(self.accelerometer_filename, 'r')
         self.gps_file = open(self.gps_filename, 'r')
         self.accelerometer_reader = reader(self.accelerometer_file)

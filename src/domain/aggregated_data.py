@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
-from accelerometer import Accelerometer
-from gps import Gps
+from src.domain.accelerometer import Accelerometer
+from src.domain.gps import Gps
 
 
 @dataclass
