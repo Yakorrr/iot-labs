@@ -1,7 +1,8 @@
 import time
 from paho.mqtt import client as mqtt_client
 import config
-from file_datasource import FileDatasource
+from generate_height_data import generate_height_data
+from src.file_datasource import FileDatasource
 from src.schema.aggregated_data_schema import AggregatedDataSchema
 
 
@@ -48,8 +49,14 @@ def run():
     # Prepare mqtt client
     client = connect_mqtt(config.MQTT_BROKER_HOST, config.MQTT_BROKER_PORT)
 
+    generate_height_data('src/data/height.csv', 300)
+
     # Prepare datasource
-    datasource = FileDatasource("src/data/data.csv", "src/data/gps.csv")
+    datasource = FileDatasource(
+        "src/data/data.csv",
+        "src/data/gps.csv",
+        "src/data/height.csv",
+    )
 
     # Infinity publish data
     publish(client, config.MQTT_TOPIC, datasource, config.DELAY)
