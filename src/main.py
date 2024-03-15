@@ -1,5 +1,5 @@
-from config import *
-from models import ProcessedAgentData, ProcessedAgentDataInDB
+from src.config import *
+from src.models import ProcessedAgentData, ProcessedAgentDataInDB
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, DateTime, select
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect,  HTTPException
