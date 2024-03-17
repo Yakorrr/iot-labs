@@ -14,7 +14,19 @@ connect to pgadmin:
 2. localhost:5050
 3. email: admin@admin.com
 4. password: root
-5. go to Server -> test_db -> Schemas -> Tables -> processed_agent_data;
+
+Add server:
+
+1. Server right click -> Register -> Server ...
+2. In General Tab -> Name = Store
+3. In Connection Tab
+   -> Host name/address = postgres_db
+   -> Maintenance database = test_db
+   -> Username = user
+   -> Password = pass
+4. Save
+   You should be connected to db and see
+   Server -> test_db -> Schemas -> Tables -> processed_agent_data;
 
 see endpoints:
 
