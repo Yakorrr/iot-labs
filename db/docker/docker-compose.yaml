@@ -11,7 +11,8 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: test_db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      # - postgres_data:/var/lib/postgresql/data
+      - ../../data/db:/var/lib/postgresql/data
       - ./db/structure.sql:/docker-entrypoint-initdb.d/structure.sql
     ports:
       - "5432:5432"
@@ -26,7 +27,8 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - ../../data/pgadmin:/var/lib/pgadmin
+      # - pgadmin-data:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
