@@ -46,7 +46,7 @@ def publish(client, topic, datasource, delay):
 
 
 def run():
-    # Prepare mqtt client
+    # Prepare mqtt-agent client
     client = connect_mqtt(config.MQTT_BROKER_HOST, config.MQTT_BROKER_PORT)
 
     # Prepare datasource
