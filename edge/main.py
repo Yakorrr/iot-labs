@@ -27,12 +27,6 @@ if __name__ == "__main__":
         api_base_url=HUB_URL,
     )
 
-    # hub_adapter = HubMqttAdapter(
-    #     broker=HUB_MQTT_BROKER_HOST,
-    #     port=HUB_MQTT_BROKER_PORT,
-    #     topic=HUB_MQTT_TOPIC,
-    # )
-
     # Create an instance of the AgentMQTTAdapter using the configuration
     agent_adapter = AgentMQTTAdapter(
         broker_host=MQTT_BROKER_HOST,
