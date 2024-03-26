@@ -8,4 +8,4 @@ class AggregatedDataSchema(Schema):
     accelerometer = fields.Nested(AccelerometerSchema)
     gps = fields.Nested(GpsSchema)
     height = fields.Nested(HeightSchema)
-    time = fields.DateTime('iso')
+    timestamp = fields.DateTime('iso')

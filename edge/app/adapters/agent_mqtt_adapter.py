@@ -1,6 +1,6 @@
 import logging
 
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt_client
 from app.interfaces.agent_gateway import AgentGateway
 from app.entities.agent_data import AgentData
 from app.usecases.data_processing import process_agent_data
@@ -13,7 +13,7 @@ class AgentMQTTAdapter(AgentGateway):
         self.broker_port = broker_port
         self.topic = topic
         self.hub_gateway = hub_gateway
-        self.client = mqtt.Client()
+        self.client = mqtt_client.Client()
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:

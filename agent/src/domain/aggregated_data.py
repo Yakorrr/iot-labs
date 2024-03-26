@@ -10,4 +10,4 @@ class AggregatedData:
     accelerometer: Accelerometer
     gps: Gps
     height: Height
-    time: datetime
+    timestamp: datetime

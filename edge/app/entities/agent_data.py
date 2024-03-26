@@ -19,11 +19,11 @@ class Height(BaseModel):
 
 
 class AgentData(BaseModel):
-    user_id: int
+    # user_id: int
     accelerometer: AccelerometerData
     gps: GpsData
-    timestamp: datetime
     height: Height
+    timestamp: datetime
 
     @classmethod
     @field_validator("timestamp", mode="before")
