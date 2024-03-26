@@ -9,7 +9,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from src.config import *
 from src.models import ProcessedAgentData, ProcessedAgentDataInDB
 
-from config import (
+from src.config import (
     POSTGRES_HOST,
     POSTGRES_PORT,
     POSTGRES_USER,
