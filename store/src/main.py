@@ -24,6 +24,7 @@ processed_agent_data = Table(
     Column("z", Float),
     Column("latitude", Float),
     Column("longitude", Float),
+    Column("height", Float),
     Column("timestamp", DateTime),
 )
 
@@ -67,6 +68,7 @@ def create_processed_agent_data(data: List[ProcessedAgentData]):
                     'z': item.agent_data.accelerometer.z,
                     'latitude': item.agent_data.gps.latitude,
                     'longitude': item.agent_data.gps.longitude,
+                    'height': item.agent_data.height.height,
                     'timestamp': item.agent_data.timestamp,
                 }
                 result = connection.execute(processed_agent_data.insert().values(insert_dict))
@@ -114,6 +116,7 @@ def update_processed_agent_data(processed_agent_data_id: int, data: ProcessedAge
                 z=data.agent_data.accelerometer.z,
                 latitude=data.agent_data.gps.latitude,
                 longitude=data.agent_data.gps.longitude,
+                height=data.agent_data.height,
                 timestamp=data.agent_data.timestamp,
             )
             result = connection.execute(update_query)
@@ -149,5 +152,5 @@ def delete_processed_agent_data(processed_agent_data_id: int):
 
 
 if __name__ == "__main__":
-    import uvicorn 
+    import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000) 

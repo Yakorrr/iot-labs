@@ -13,10 +13,15 @@ class GpsData(BaseModel):
     longitude: float
 
 
+class HeightData(BaseModel):
+    height: float
+
+
 class AgentData(BaseModel):
-    user_id: int
+    # user_id: int
     accelerometer: AccelerometerData
     gps: GpsData
+    height: HeightData
     timestamp: datetime
 
     @classmethod

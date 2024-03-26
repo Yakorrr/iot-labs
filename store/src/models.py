@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from datetime import datetime
 
 class AccelerometerData(BaseModel):
@@ -10,12 +10,19 @@ class GpsData(BaseModel):
     latitude: float
     longitude: float
 
+
+class HeightData(BaseModel):
+    height: float
+
+
 class AgentData(BaseModel):
     accelerometer: AccelerometerData
     gps: GpsData
+    height: HeightData
     timestamp: datetime
 
-    @validator('timestamp', pre=True)
+    @classmethod
+    @field_validator("timestamp", mode="before")
     def check_timestamp(cls, value):
         if isinstance(value, datetime):
             return value
@@ -36,4 +43,5 @@ class ProcessedAgentDataInDB(BaseModel):
     z: float
     latitude: float
     longitude: float
+    height: float
     timestamp: datetime
