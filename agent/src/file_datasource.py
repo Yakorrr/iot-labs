@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from csv import reader
 from datetime import datetime
-from src.domain.accelerometer import Accelerometer
-from src.domain.gps import Gps
+from csv import reader
+
 from src.domain.aggregated_data import AggregatedData
+from src.domain.accelerometer import Accelerometer
 from src.domain.height import Height
+from src.domain.gps import Gps
 
 
 @dataclass

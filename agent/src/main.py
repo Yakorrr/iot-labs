@@ -1,9 +1,17 @@
 import time
+
 from paho.mqtt import client as mqtt_client
-import config
+
 from generate_height_data import generate_height_data
 from src.file_datasource import FileDatasource
 from src.schema.aggregated_data_schema import AggregatedDataSchema
+
+from config import (
+    MQTT_BROKER_HOST,
+    MQTT_BROKER_PORT,
+    MQTT_TOPIC,
+    DELAY,
+)
 
 
 def connect_mqtt(broker, port):
@@ -34,20 +42,18 @@ def publish(client, topic, datasource, delay):
         msg = AggregatedDataSchema().dumps(data)
         result = client.publish(topic, msg)
 
-        # result: [0, 1]
         status = result[0]
 
         if status == 0:
             pass
 
-        # print(f"Send `{msg}` to topic `{topic}`")
         else:
             print(f"Failed to send message to topic {topic}")
 
 
 def run():
     # Prepare mqtt-agent client
-    client = connect_mqtt(config.MQTT_BROKER_HOST, config.MQTT_BROKER_PORT)
+    client = connect_mqtt(MQTT_BROKER_HOST, MQTT_BROKER_PORT)
 
     # Prepare datasource
     try:
@@ -66,7 +72,7 @@ def run():
         )
 
     # Infinity publish data
-    publish(client, config.MQTT_TOPIC, datasource, config.DELAY)
+    publish(client, MQTT_TOPIC, datasource, DELAY)
 
 
 if __name__ == '__main__':

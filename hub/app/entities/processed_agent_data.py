@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from app.entities.agent_data import AgentData
 
 

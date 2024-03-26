@@ -19,7 +19,6 @@ class Height(BaseModel):
 
 
 class AgentData(BaseModel):
-    # user_id: int
     accelerometer: AccelerometerData
     gps: GpsData
     height: Height

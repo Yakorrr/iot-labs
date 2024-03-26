@@ -1,10 +1,13 @@
-from pydantic import BaseModel, field_validator
 from datetime import datetime
+
+from pydantic import BaseModel, field_validator
+
 
 class AccelerometerData(BaseModel):
     x: float
     y: float
     z: float
+
 
 class GpsData(BaseModel):
     latitude: float
@@ -31,9 +34,11 @@ class AgentData(BaseModel):
         except (TypeError, ValueError):
             raise ValueError("Invalid timestamp format. Expected ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).")
 
+
 class ProcessedAgentData(BaseModel):
     road_state: str
     agent_data: AgentData
+
 
 class ProcessedAgentDataInDB(BaseModel):
     id: int

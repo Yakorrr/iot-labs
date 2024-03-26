@@ -1,6 +1,7 @@
+from paho.mqtt import client as mqtt_client
+
 from app.entities.processed_agent_data import ProcessedAgentData
 from app.interfaces.hub_gateway import HubGateway
-from paho.mqtt import client as mqtt_client
 
 
 class HubMqttAdapter(HubGateway):
