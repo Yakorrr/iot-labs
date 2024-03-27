@@ -14,7 +14,6 @@ services:
     networks:
       mqtt_network:
 
-
   postgres_db:
     image: postgres:latest
     container_name: postgres_db
@@ -30,7 +29,6 @@ services:
       - "5432:5432"
     networks:
       db_network:
-
 
   pgadmin:
     container_name: pgadmin4
@@ -53,7 +51,6 @@ services:
       - "6379:6379"
     networks:
       hub_redis:
-
 
   store:
     container_name: store
@@ -86,13 +83,9 @@ services:
       MQTT_TOPIC: "agent_data_topic"
       HUB_HOST: "hub"
       HUB_PORT: 8000
-#      HUB_MQTT_BROKER_HOST: "mqtt"
-#      HUB_MQTT_BROKER_PORT: 1883
-#      HUB_MQTT_TOPIC: "processed_data_topic"
     networks:
       mqtt_network:
       edge_hub:
-
 
   hub:
     container_name: hub
@@ -106,9 +99,6 @@ services:
       STORE_API_PORT: 8000
       REDIS_HOST: "redis"
       REDIS_PORT: 6379
-#      MQTT_BROKER_HOST: "mqtt"
-#      MQTT_BROKER_PORT: 1883
-#      MQTT_TOPIC: "processed_data_topic"
       BATCH_SIZE: 1
     ports:
       - "9000:8000"
@@ -137,7 +127,6 @@ networks:
   hub:
   hub_store:
   hub_redis:
-
 
 volumes:
   postgres_data:
