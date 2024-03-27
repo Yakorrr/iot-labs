@@ -1,8 +1,6 @@
-import json
 import logging
 from typing import List
 
-import pydantic_core
 import requests
 
 from app.entities.processed_agent_data import ProcessedAgentData

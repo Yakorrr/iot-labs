@@ -1,7 +1,9 @@
 FROM python:3.9-slim
-WORKDIR /app
+
+WORKDIR /usr/agent
+ENV PYTHONPATH=/usr/agent
 
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0"]
+CMD ["python", "src/main.py"]
