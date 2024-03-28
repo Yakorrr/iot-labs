@@ -1,4 +1,5 @@
 import json
+import logging
 from typing import Set, List
 
 import uvicorn
@@ -15,6 +16,15 @@ from src.config import (
     POSTGRES_USER,
     POSTGRES_PASSWORD,
     POSTGRES_DB,
+)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s",
+    handlers=[
+        logging.StreamHandler(),  # Output log messages to the console
+        logging.FileHandler("app.log"),  # Save log messages to a file
+    ],
 )
 
 # SQLAlchemy setup
@@ -42,7 +52,6 @@ app = FastAPI()
 
 subscriptions: Set[WebSocket] = set()
 
-
 @app.websocket("/ws/")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -57,15 +66,16 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 async def send_data_to_subscribers(data):
+    logging.info(f"Sending data to {len(subscriptions)} subscribers")
     for websocket in subscriptions:
         # Convert the data to JSON and send it to all connected WebSocket clients
-        await websocket.send_json(json.dumps(data))
+        await websocket.send_json(data.model_dump_json())
 
 
 # FastAPI CRUDL endpoints 
 # Send data to subscribers
 @app.post("/processed_agent_data/", response_model=List[ProcessedAgentDataInDB])
-def create_processed_agent_data(data: List[ProcessedAgentData]):
+async def create_processed_agent_data(data: List[ProcessedAgentData]):
     """ Insert data to database """
     response_data = []
 
@@ -89,6 +99,9 @@ def create_processed_agent_data(data: List[ProcessedAgentData]):
 
                 insert_dict['id'] = inserted_id
                 response_data.append(insert_dict)
+
+                logging.info(f"Try to send data: {item}")
+                await send_data_to_subscribers(item)
 
             trans.commit()
         except SQLAlchemyError as e:

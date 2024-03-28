@@ -57,14 +57,14 @@ def run():
 
     # Prepare datasource
     try:
-        generate_height_data('src/data/height.csv', 300)
+        # generate_height_data('src/data/height.csv', 300)
         datasource = FileDatasource(
             "src/data/data.csv",
             "src/data/gps.csv",
             "src/data/height.csv",
         )
     except FileNotFoundError:
-        generate_height_data('data/height.csv', 300)
+        # generate_height_data('data/height.csv', 300)
         datasource = FileDatasource(
             "data/data.csv",
             "data/gps.csv",
